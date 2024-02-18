@@ -64,8 +64,15 @@ class MyWebService
     public function get($payload = null, string $query = null) {
         $fullURL = $this->fullURL . ($query ? $query : '');
 
-        if ($this->endPoints === 'authentications' && $query === 'check') {
-            $accessToken = $payload['token'];
+        if ($this->endPoints === 'authentications') {
+            if ($query === '/check') {
+                $accessToken = $payload['token'];
+            }
+
+            if (explode('?', $query)[0] === '/check/site') {
+                $accessToken = Session::get('token');
+            }
+
         } else {
             $accessToken = Session::get('token');
         }
