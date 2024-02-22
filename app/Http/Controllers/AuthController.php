@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 // ? Services
 use App\Models\AuthService;
-use Illuminate\Support\Facades\Session;
+use App\Models\UserService;
 
 class AuthController extends Controller
 {
@@ -32,11 +33,22 @@ class AuthController extends Controller
         // save token to session
         Session::put('token', $token);
 
+        // get user profile
+        $userService = new UserService();
+        $user = $userService->getMyProfile()->getData('data')['data'];
+        $userRole = $user['account'];
+        $userProfile = $user['profile'];
+
+        // save user data to session, data is array
+        Session::put('role', $userRole);
+        Session::put('profile', $userProfile);
+
         return redirect()->route('home');
     }
 
     public function logout() {
         if (Session::exists('token')) {
+            Session::remove('role');
             Session::remove('token');
         } else {
             return self::redirectToLogin();
