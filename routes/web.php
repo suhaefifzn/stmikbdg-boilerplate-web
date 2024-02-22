@@ -14,9 +14,12 @@ Route::controller(AuthController::class)
  * ! Jadikan route di bawah sebagai halaman utama dari web
  * ! harap tidak mengubah nilai pada name();
  */
-Route::get('/home', function () {
-    return view('welcome');
-})->name('home')->middleware('auth.token');
+Route::middleware('auth.token')
+    ->group(function () {
+        Route::get('/home', function () {
+            return view('welcome');
+        })->name('home');
+    });
 
 /**
  * * Buat route-route baru di bawah ini
