@@ -42,6 +42,7 @@ class AuthController extends Controller
         // save user data to session, data is array
         Session::put('role', $userRole);
         Session::put('profile', $userProfile);
+        Session::put('user_image', Session::get('role')['image']);
 
         return redirect()->route('home');
     }

@@ -34,4 +34,8 @@ class UserService extends MyWebService {
 
         return $this->put($payload, '/me/password');
     }
+
+    public function updateMyImage($imagePath) {
+        return $this->postFile($imagePath, '/me/image');
+    }
 }
