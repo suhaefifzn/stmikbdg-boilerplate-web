@@ -28,7 +28,7 @@
     <body>
         <main>
             <div class="container mt-3">
-                <p><b>Hello!</b> - STMIK Bandung - Boilerplate</p>
+                {{ dd($data) }}
             </div>
         </main>
 

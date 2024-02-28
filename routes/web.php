@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
 // ! Jangan ubah route yang ada dalam group ini
@@ -16,9 +17,7 @@ Route::controller(AuthController::class)
  */
 Route::middleware('auth.token')
     ->group(function () {
-        Route::get('/home', function () {
-            return view('welcome');
-        })->name('home');
+        Route::get('/home', [TestController::class, 'home'])->name('home');
     });
 
 /**

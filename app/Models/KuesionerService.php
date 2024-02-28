@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\MyWebService;
 
-class UserService extends MyWebService {
+class KuesionerService extends MyWebService {
     public function __construct() {
         parent::__construct('kuesioner');
     }
