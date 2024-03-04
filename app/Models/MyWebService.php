@@ -161,16 +161,19 @@ class MyWebService
 
         try {
             $response = $this->client->post($fullURL, [
-                RequestOptions::HEADERS => $this->setHeaders($accessToken),
+                RequestOptions::HEADERS => [
+                    'Authorization' => 'Bearer ' . $accessToken,
+                ],
                 RequestOptions::MULTIPART => [
                     [
                         'name' => 'file',
                         'contents' => fopen($filePath, 'r'),
+                        'filename' => basename($filePath),
                     ],
                 ],
             ]);
 
-            return $this->setSuccessResponse($response, $this->endPoints);
+            return $this->setSuccessResponse($response);
         } catch (ClientException $e) {
             return $this->setBadResponse($e);
         } catch (RequestException $e) {
