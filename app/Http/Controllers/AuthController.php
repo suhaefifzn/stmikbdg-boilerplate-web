@@ -43,16 +43,18 @@ class AuthController extends Controller
         Session::put('role', $userRole);
         Session::put('profile', $userProfile);
         Session::put('user_image', Session::get('role')['image']);
+        Session::put('user_email', Session::get('role')['email']);
 
         return redirect()->route('home');
     }
 
     public function logout() {
         if (Session::exists('token')) {
-            Session::remove('role');
             Session::remove('token');
-        } else {
-            return self::redirectToLogin();
+            Session::remove('role');
+            Session::remove('profile');
+            Session::remove('user_image');
+            Session::remove('user_email');
         }
 
         return self::redirectToLogout();
