@@ -19,6 +19,7 @@ class AuthController extends Controller
 
     public function checkToken(Request $request) {
         $token = $request->query('token');
+        $role = $request->query('role');
 
         if (!$token) {
             return self::redirectToLogin();
@@ -39,11 +40,11 @@ class AuthController extends Controller
         $userRole = $user['account'];
         $userProfile = $user['profile'];
 
-        // save user data to session, data is array
-        Session::put('role', $userRole);
+        // save user data to session
+        Session::put('role', [$role => true]);
         Session::put('profile', $userProfile);
-        Session::put('user_image', Session::get('role')['image']);
-        Session::put('user_email', Session::get('role')['email']);
+        Session::put('user_image', $user['account']['image']);
+        Session::put('user_email', $user['account']['email']);
 
         return redirect()->route('home');
     }

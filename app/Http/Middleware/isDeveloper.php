@@ -16,10 +16,8 @@ class isDeveloper
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Session::exists('role')) {
-            $isDeveloper = Session::get('role')['is_dev'];
-
-            if ($isDeveloper) {
+        if (isset(Session::get('role')['is_dev'])) {
+            if (Session::get('role')['is_dev']) {
                 return $next($request);
             }
         }

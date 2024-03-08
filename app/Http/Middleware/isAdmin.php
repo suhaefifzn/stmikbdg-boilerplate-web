@@ -16,10 +16,8 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Session::exists('role')) {
-            $isAdmin = Session::get('role')['is_admin'];
-
-            if ($isAdmin) {
+        if (isset(Session::exists('role')['is_admin'])) {
+            if (Session::get('role')['is_admin']) {
                 return $next($request);
             }
         }
