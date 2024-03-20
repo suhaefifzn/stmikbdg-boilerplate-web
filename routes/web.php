@@ -3,11 +3,14 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
-// ! Jangan ubah route yang ada dalam group ini
+/**
+ * ! Jangan ubah route yang ada dalam group ini
+ * */
 Route::controller(AuthController::class)
     ->group(function () {
         Route::get('/', 'checkToken')->name('check');
         Route::get('/logout', 'logout')->name('logout'); // gunakan untuk logout
+        Route::get('/roles', 'changeUserRole')->middleware('auth.token');
     });
 
 /**
