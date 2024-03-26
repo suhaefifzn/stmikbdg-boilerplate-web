@@ -88,7 +88,7 @@ class AuthController extends Controller
     }
 
     private function redirectToVerifyPage() {
-        redirect()->away(
+        return redirect()->away(
             config('myconfig.login.base_url') . 'verify?site=' . config('app.url')
         );
     }
