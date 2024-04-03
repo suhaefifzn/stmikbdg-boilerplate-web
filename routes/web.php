@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -40,3 +41,6 @@ Route::middleware('auth.token')
  *
  * ? contoh penggunaan: middleware(['auth.token', 'auth.mahasiswa'])
  */
+
+ Route::get('/statistik/pengajuan', [HomeController::class, 'index'])
+    ->middleware(['auth.token', 'auth.admin']);

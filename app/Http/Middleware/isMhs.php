@@ -16,8 +16,8 @@ class isMhs
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (isset(Session::get('role')['is_mhs'])) {
-            if (Session::get('role')['is_mhs']) {
+        if (Session::exists('account')) {
+            if (Session::get('account')['is_mhs']) {
                 return $next($request);
             }
         }
