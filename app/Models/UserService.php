@@ -18,14 +18,6 @@ class UserService extends MyWebService {
         return $this->get(null, '/me');
     }
 
-    public function updateMyEmail($newEmail) {
-        $payload = [
-            'email' => $newEmail,
-        ];
-
-        return $this->put($payload, '/me');
-    }
-
     public function updateMyPassword($currentPassword, $newPassword) {
         $payload = [
             'current_password' => $currentPassword,
