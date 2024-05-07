@@ -16,8 +16,8 @@ class isDosen
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (isset(Session::get('role')['is_mhs'])) {
-            if (Session::get('role')['is_mhs']) {
+        if (Session::has('role')) {
+            if (isset(Session::get('role')['is_dosen'])) {
                 return $next($request);
             }
         }

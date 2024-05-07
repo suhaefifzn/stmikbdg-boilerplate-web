@@ -39,27 +39,58 @@ class AuthController extends Controller
             $userService = new UserService();
             $user = $userService->getMyProfile()->getData('data')['data'];
             $userProfile = $user['profile'];
+            $userAccount = $user['account'];
+
+            // verify role
+            if ($userAccount[$role]) {
+                Session::put('role', [$role => true]);
+            } else {
+                return self::changeUserRole();
+            }
 
             // save user data to session
-            Session::put('role', [$role => true]);
+            Session::put('account', $userAccount);
             Session::put('profile', $userProfile);
             Session::put('user_image', $user['account']['image']);
             Session::put('user_email', $user['account']['email']);
-        }
 
-        return redirect()->route('home');
+            return redirect()->route('home');
+        } else {
+            if (Session::has('role') and Session::has('token')) {
+                return redirect()->route('home');
+            }
+
+            return self::redirectToVerifyPage();
+        }
     }
 
     public function logout() {
         if (Session::exists('token')) {
-            Session::remove('role');
             Session::remove('token');
+            Session::remove('role');
             Session::remove('profile');
             Session::remove('user_image');
             Session::remove('user_email');
         }
 
         return self::redirectToLogout();
+    }
+
+    public function changeUserRole() {
+        $tempSessionRole = Session::get('account');
+        $data = [
+            'roles' => array_filter($tempSessionRole, function ($item) {
+                return is_bool($item) && $item === true;
+            }),
+        ];
+
+        return view('auth.roles', $data);
+    }
+
+    private function redirectToVerifyPage() {
+        return redirect()->away(
+            config('myconfig.login.base_url') . 'verify?site=' . config('app.url')
+        );
     }
 
     private function redirectToLogin() {

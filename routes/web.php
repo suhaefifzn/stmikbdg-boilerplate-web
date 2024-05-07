@@ -1,14 +1,17 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-// ! Jangan ubah route yang ada dalam group ini
+/**
+ * ! Jangan ubah route yang ada dalam group ini
+ * */
 Route::controller(AuthController::class)
     ->group(function () {
         Route::get('/', 'checkToken')->name('check');
         Route::get('/logout', 'logout')->name('logout'); // gunakan untuk logout
+        Route::get('/roles', 'changeUserRole')->middleware('auth.token');
     });
 
 /**
@@ -17,7 +20,7 @@ Route::controller(AuthController::class)
  */
 Route::middleware('auth.token')
     ->group(function () {
-        Route::get('/home', [TestController::class, 'home'])->name('home');
+        Route::get('/home', [HomeController::class, 'index'])->name('home');
     });
 
 /**

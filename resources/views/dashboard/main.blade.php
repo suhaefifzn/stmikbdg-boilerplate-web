@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="author" content="STMIK Bandung">
-    <title>STMIK Bandung - Boilerplate</title>
+    <title>STMIK Bandung {{ $title ? ' - ' . $title : '' }}</title>
 
     {{-- Favicons --}}
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
@@ -26,9 +26,13 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
     <body>
+        {{-- Navbar --}}
+        @include('dashboard.navbar')
+
         <main>
             <div class="container mt-3">
-                {{ dd($data) }}
+                {{-- Load Content --}}
+                @yield('content')
             </div>
         </main>
 
