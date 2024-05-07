@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -19,9 +20,7 @@ Route::controller(AuthController::class)
  */
 Route::middleware('auth.token')
     ->group(function () {
-        Route::get('/home', function () {
-            return view('welcome');
-        })->name('home');
+        Route::get('/home', [HomeController::class, 'home'])->name('home');
     });
 
 /**
@@ -40,3 +39,8 @@ Route::middleware('auth.token')
  *
  * ? contoh penggunaan: middleware(['auth.token', 'auth.mahasiswa'])
  */
+
+ /**
+  * Apabila telah menambahkan route baru tetapi tidak dapat diakses
+  * buka terminal baru dan jalankan perintah 'php artisan optimize' tanpa tanda petik
+  */
