@@ -10,7 +10,7 @@ class AuthService extends MyWebService
     use HasFactory;
 
     public function __construct() {
-        parent::__construct('authentications');
+        parent::__construct(false, 'authentications');
     }
 
     public function validateUserSiteAccess($siteURL) {

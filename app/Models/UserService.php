@@ -7,23 +7,15 @@ use App\Models\MyWebService;
 class UserService extends MyWebService {
     /**
      * UserService digunakan untuk mengatur akun pengguna itu sendiri
-     * seperti get profile, ganti email, dan ganti password.
+     * seperti get profile, ganti password, dan ganti foto.
      */
 
     public function __construct() {
-        parent::__construct('users');
+        parent::__construct(false, 'users');
     }
 
     public function getMyProfile() {
         return $this->get(null, '/me');
-    }
-
-    public function updateMyEmail($newEmail) {
-        $payload = [
-            'email' => $newEmail,
-        ];
-
-        return $this->put($payload, '/me');
     }
 
     public function updateMyPassword($currentPassword, $newPassword) {

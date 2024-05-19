@@ -20,8 +20,10 @@ class MyWebService
     protected $client;
     protected $fullURL;
 
-    public function __construct(string $endPoints) {
-        $this->baseURL = config('myconfig.api.base_url');
+    public function __construct($isOriginalSIKPS = false, string $endPoints) {
+        $this->baseURL = $isOriginalSIKPS
+            ? config('myconfig.api.original_sikps')
+            : config('myconfig.api.base_url');
         $this->endPoints = $endPoints;
         $this->fullURL = $this->baseURL . $this->endPoints;
         $this->client = new Client();
