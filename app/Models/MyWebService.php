@@ -51,6 +51,7 @@ class MyWebService
     }
 
     private function setBadResponse($response) {
+        dd($response);
         $decodedResponse = json_decode($response->getResponse()->getBody());
         $statusCode = $response->getResponse()->getStatusCode();
         $message = isset($decodedResponse->message) ? $decodedResponse->message : null;
