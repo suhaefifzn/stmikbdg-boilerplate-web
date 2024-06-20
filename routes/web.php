@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\KategoriSuratController;
+use App\Http\Controllers\Admin\SuratMasukController as AdminSuratMasukController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -32,10 +35,10 @@ Route::middleware('auth.token')
  * * Berikut adalah beberapa middleware lain yang telah tersedia,
  * * dapat digunakan untuk mengatur akses route berdasarkan role user
  *
- * 1.) auth.admin -> biasa digunakan untuk akses route untuk manage user lain
- * 2.) auth.mahasiswa -> akses route untuk user dengan role mahasiswa
- * 3.) auth.dosen -> akses route untuk user dengan role dosen
- * 4.) auth.developer -> akses route untuk user developer
+ * 1.) auth.admin
+ * 2.) auth.secretary
+ * 3.) auth.wakil
+ * 4.) auth.staff
  *
  * ? contoh penggunaan: middleware(['auth.token', 'auth.mahasiswa'])
  */
@@ -44,3 +47,41 @@ Route::middleware('auth.token')
   * Apabila telah menambahkan route baru tetapi tidak dapat diakses
   * buka terminal baru dan jalankan perintah 'php artisan optimize' tanpa tanda petik
   */
+
+// Admin
+Route::prefix('/admin')
+    ->middleware(['auth.token', 'auth.admin'])
+    ->group(function () {
+        // kategori
+        Route::controller(KategoriSuratController::class)
+            ->prefix('/kategori')
+            ->group(function () {
+                Route::get('/', 'index');
+                Route::post('/add', 'add');
+                Route::put('/update', 'update');
+                Route::get('/detail', 'detail');
+                Route::get('/delete', 'delete');
+            });
+
+        // surat masuk
+        Route::controller(AdminSuratMasukController::class)
+            ->prefix('/surat')
+            ->group(function () {
+                Route::get('/disposisi', 'disposisi');
+                Route::get('/arsip', 'getListArsip');
+
+                // kelola surat masuk
+                Route::prefix('/masuk')
+                    ->group(function () {
+                        Route::get('/', 'getListSurat');
+                        Route::post('/add', 'addSurat');
+                    });
+            });
+
+        // pengguna
+        Route::controller(AdminUserController::class)
+            ->prefix('/pengguna')
+            ->group(function () {
+                Route::get('/', 'index');
+            });
+    });

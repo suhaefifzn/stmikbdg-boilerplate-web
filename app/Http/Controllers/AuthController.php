@@ -22,6 +22,8 @@ class AuthController extends Controller
             $token = $request->query('token');
             $role = $request->query('role');
 
+            // dd($role);
+
             if (!$token) {
                 return self::redirectToLogin();
             }
@@ -42,10 +44,16 @@ class AuthController extends Controller
             $userAccount = $user['account'];
 
             // verify role
-            if ($userAccount[$role]) {
+            if (isset($userAccount[$role])) {
                 Session::put('role', [$role => true]);
             } else {
-                return self::changeUserRole();
+                $staff = $userService->getStaffProfile($userAccount['id'])->getData('data')['data']['staff'];
+
+                if ($staff['is_secretary']) {
+                    Session::put('role', [$role => true]);
+                } else {
+                    return self::changeUserRole();
+                }
             }
 
             // save user data to session

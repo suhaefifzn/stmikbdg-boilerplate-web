@@ -6,6 +6,10 @@ use App\Models\MyWebService;
 
 class AdminKategoriService extends MyWebService
 {
+    /**
+     * Selengkapnya cek dokumentasi API
+     * untuk sistem surat masuk dan keluar
+     */
     public function __construct()
     {
         parent::__construct('surat/kategori');
@@ -32,5 +36,9 @@ class AdminKategoriService extends MyWebService
         return $this->delete([
             'kategori_id' => $id
         ], '/delete');
+    }
+
+    public function getDetailKategori(int $id) {
+        return $this->get(null, ('/list?kategori_id=' . $id));
     }
 }

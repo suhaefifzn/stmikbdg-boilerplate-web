@@ -6,6 +6,10 @@ use App\Models\MyWebService;
 
 class AdminSuratMasukService extends MyWebService
 {
+    /**
+     * Selengkapnya, cek dokumentasi API
+     * untuk sistem surat masuk dan keluar
+     */
     public function __construct()
     {
         parent::__construct('surat/masuk');

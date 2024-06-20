@@ -5,21 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
+// ? Web Service
+use App\Models\MainSuratService;
+
 class HomeController extends Controller
 {
+    protected $service;
+
     public function __construct() {
-        // buat instance dari web service di sini
+        $this->service = new MainSuratService();
     }
 
     public function home() {
-        if (isset(Session::get('role')['is_admin'])) {
-            /**
-             * jika yang login adalah admin
-             */
+        $statistik = $this->service->getStatistik()->getData('data')['data']['statistik'];
 
-            return view('dashboard.admin.home', [
-                'title' => 'Home',
-            ]);
-        }
+        return view('dashboard.home', [
+            'title' => 'Home',
+            'data' => [
+                'statistik' => $statistik
+            ]
+        ]);
     }
 }

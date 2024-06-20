@@ -22,4 +22,12 @@ class MainSuratService extends MyWebService
     public function getListCatatanArsip() {
         return $this->get(null, '/arsip/catatan');
     }
+
+    public function getArsipSurat() {
+        return $this->get(null, '/arsip');
+    }
+
+    public function getListStaff() {
+        return $this->get(null, '/staff/list');
+    }
 }
